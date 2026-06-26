@@ -2,6 +2,7 @@
 *.json
 *.json.bak
 *.bak
+*.txt
 
 # Temp download artifacts
 *.json.tmp
