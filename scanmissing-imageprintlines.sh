@@ -50,6 +50,9 @@ else
     echo "Mode: REPORT only (run with --fix to copy missing files)"
 fi
 
+echo "CSV:  $CSV"
+echo "List: $LIST"
+
 # Totals across all targets.
 grand_missing=0
 grand_in_source=0
@@ -59,7 +62,7 @@ grand_fix_failed=0
 
 # Read the CSV, skipping the header row.
 first_line=1
-while IFS=',' read -r type target source _rest; do
+while IFS=',' read -r type target source _rest || [ -n "${type:-}" ]; do
     # Skip header.
     if [ "$first_line" -eq 1 ]; then first_line=0; continue; fi
     # Skip blank lines.
