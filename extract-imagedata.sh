@@ -18,7 +18,7 @@ set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JSON_PATH="${1:-$SCRIPT_DIR/productfeed_en_v3.json}"
-OUTFILE="${2:-$SCRIPT_DIR/imageData_filenames.txt}"
+OUTFILE="${2:-$SCRIPT_DIR/imagedata_filenames.txt}"
 
 if [ ! -f "$JSON_PATH" ]; then
     echo "Input JSON not found: $JSON_PATH" >&2

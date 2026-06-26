@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# scanmissing-imagedata.sh
+# scanmissing-imageprintlines.sh
 #
-# For every target/source pair listed in imagedata_locations.csv, check whether
-# each filename in imagedata_filenames.txt exists in the target directory.
+# For every target/source pair listed in imageprintlines_locations.csv, check
+# whether each filename in imageprintlines.txt exists in the target directory.
 # Report any missing file, and also report whether it exists in the source dir.
 # With --fix, copy the file from source to target when it is missing from target
 # but present in source.
@@ -11,11 +11,11 @@
 # Tested on CentOS Stream 9.
 #
 # Usage:
-#   ./scanmissing-imagedata.sh [--fix] [csv-file] [filelist]
+#   ./scanmissing-imageprintlines.sh [--fix] [csv-file] [filelist]
 #
 #   --fix        copy source -> target for files missing in target
-#   csv-file     default: imagedata_locations.csv  (columns: type,target,source)
-#   filelist     default: imagedata_filenames.txt  (one filename per line)
+#   csv-file     default: imageprintlines_locations.csv  (columns: type,target,source)
+#   filelist     default: imageprintlines.txt  (one filename per line)
 
 set -uo pipefail
 
@@ -38,8 +38,8 @@ for arg in "$@"; do
     esac
 done
 
-CSV="${POSARGS[0]:-$SCRIPT_DIR/imagedata_locations.csv}"
-LIST="${POSARGS[1]:-$SCRIPT_DIR/imagedata_filenames.txt}"
+CSV="${POSARGS[0]:-$SCRIPT_DIR/imageprintlines_locations.csv}"
+LIST="${POSARGS[1]:-$SCRIPT_DIR/imageprintlines.txt}"
 
 if [ ! -f "$CSV" ];  then echo "CSV not found: $CSV" >&2;  exit 1; fi
 if [ ! -f "$LIST" ]; then echo "File list not found: $LIST" >&2; exit 1; fi

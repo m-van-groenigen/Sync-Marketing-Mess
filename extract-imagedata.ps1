@@ -18,7 +18,7 @@
 [CmdletBinding()]
 param(
     [string]$JsonPath = (Join-Path $PSScriptRoot 'productfeed_en_v3.json'),
-    [string]$OutFile  = (Join-Path $PSScriptRoot 'imageData_filenames.txt'),
+    [string]$OutFile  = (Join-Path $PSScriptRoot 'imagedata_filenames.txt'),
     [int]$BufferSize  = 131072
 )
 

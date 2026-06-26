@@ -18,7 +18,7 @@
 [CmdletBinding()]
 param(
     [string]$JsonPath = (Join-Path $PSScriptRoot 'printdata_cse1_fi_v3.json'),
-    [string]$OutFile  = (Join-Path $PSScriptRoot 'imagePrintLines.txt'),
+    [string]$OutFile  = (Join-Path $PSScriptRoot 'imageprintlines.txt'),
     [int]$BufferSize  = 65536
 )
 
