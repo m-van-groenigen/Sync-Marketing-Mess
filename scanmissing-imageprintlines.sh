@@ -52,8 +52,12 @@ fi
 
 echo "CSV:  $CSV"
 echo "List: $LIST"
+list_bytes=$(wc -c < "$LIST" | tr -d ' ')
+list_lines=$(wc -l < "$LIST" | tr -d ' ')
+echo "List size: $list_bytes bytes, $list_lines lines"
 
 # Totals across all targets.
+grand_checked=0
 grand_missing=0
 grand_in_source=0
 grand_not_in_source=0
@@ -90,6 +94,7 @@ while IFS=',' read -r type target source _rest || [ -n "${type:-}" ]; do
     fi
 
     missing=0
+    checked=0
     in_source=0
     not_in_source=0
     fixed=0
@@ -98,6 +103,7 @@ while IFS=',' read -r type target source _rest || [ -n "${type:-}" ]; do
     while IFS= read -r fname || [ -n "$fname" ]; do
         fname="${fname%$'\r'}"
         [ -z "$fname" ] && continue
+        checked=$((checked + 1))
 
         if [ -e "$target/$fname" ]; then
             continue
@@ -126,11 +132,12 @@ while IFS=',' read -r type target source _rest || [ -n "${type:-}" ]; do
 
     echo "-------------------------------------------------------------------"
     if [ "$FIX" -eq 1 ]; then
-        echo "  Summary: missing=$missing  copied=$fixed  copy_failed=$fix_failed  not_in_source=$not_in_source"
+        echo "  Summary: scanned=$checked  present=$((checked - missing))  missing=$missing  copied=$fixed  copy_failed=$fix_failed  not_in_source=$not_in_source"
     else
-        echo "  Summary: missing=$missing  in_source=$in_source  not_in_source=$not_in_source"
+        echo "  Summary: scanned=$checked  present=$((checked - missing))  missing=$missing  in_source=$in_source  not_in_source=$not_in_source"
     fi
 
+    grand_checked=$((grand_checked + checked))
     grand_missing=$((grand_missing + missing))
     grand_in_source=$((grand_in_source + in_source))
     grand_not_in_source=$((grand_not_in_source + not_in_source))
@@ -142,9 +149,9 @@ echo
 echo "==================================================================="
 echo "TOTAL"
 if [ "$FIX" -eq 1 ]; then
-    echo "  missing=$grand_missing  copied=$grand_fixed  copy_failed=$grand_fix_failed  not_in_source=$grand_not_in_source"
+    echo "  scanned=$grand_checked  present=$((grand_checked - grand_missing))  missing=$grand_missing  copied=$grand_fixed  copy_failed=$grand_fix_failed  not_in_source=$grand_not_in_source"
 else
-    echo "  missing=$grand_missing  in_source=$grand_in_source  not_in_source=$grand_not_in_source"
+    echo "  scanned=$grand_checked  present=$((grand_checked - grand_missing))  missing=$grand_missing  in_source=$grand_in_source  not_in_source=$grand_not_in_source"
 fi
 
 # Non-zero exit if anything is still unresolved (missing and not fixable).
