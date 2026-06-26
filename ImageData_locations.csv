@@ -1,4 +1,4 @@
 type,target,source
-jpg,/home/pfisrvm/www/ProductImages_All/JPG/500x500,/var/www/images/derivatives/500x500_All
-jpg,/home/pfisrvm/www/ProductImages_All/JPG/1600x1600,/var/www/images/derivatives/1600x1600_All
-jpg,/home/pfisrvm/www/ProductImages_All/JPG/3000x3000,/var/www/images/derivatives/3000x3000_All
+jpg,/home/pfisrvm/www/ProductImages_All/JPG/500x500,/var/www/images/derivatives/500x500_all
+jpg,/home/pfisrvm/www/ProductImages_All/JPG/1600x1600,/var/www/images/derivatives/1600x1600_all
+jpg,/home/pfisrvm/www/ProductImages_All/JPG/3000x3000,/var/www/images/derivatives/3000x3000_all
