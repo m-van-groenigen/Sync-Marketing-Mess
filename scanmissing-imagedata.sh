@@ -11,9 +11,10 @@
 # Tested on CentOS Stream 9.
 #
 # Usage:
-#   ./scanmissing-imagedata.sh [--fix] [csv-file] [filelist]
+#   ./scanmissing-imagedata.sh [--fix] [--verbose] [csv-file] [filelist]
 #
 #   --fix        copy source -> target for files missing in target
+#   --verbose    also report files that ARE present in target (with size)
 #   csv-file     default: imagedata_locations.csv  (columns: type,target,source)
 #   filelist     default: imagedata_filenames.txt  (one filename per line)
 
@@ -22,10 +23,12 @@ set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 FIX=0
+VERBOSE=0
 POSARGS=()
 for arg in "$@"; do
     case "$arg" in
         --fix) FIX=1 ;;
+        --verbose) VERBOSE=1 ;;
         -h|--help)
             sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'
             exit 0
@@ -106,6 +109,10 @@ while IFS=',' read -r type target source _rest || [ -n "${type:-}" ]; do
         checked=$((checked + 1))
 
         if [ -e "$target/$fname" ]; then
+            if [ "$VERBOSE" -eq 1 ]; then
+                fsize=$(wc -c < "$target/$fname" 2>/dev/null | tr -d ' ')
+                echo "  FOUND: $fname ($fsize bytes)"
+            fi
             continue
         fi
 

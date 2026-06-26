@@ -80,8 +80,9 @@ With `--fix`, files missing from target but present in source are copied across
 ./scanmissing-imagedata.sh --fix          # copy missing files from source
 ```
 
-Both accept optional `[csv-file] [filelist]` positional arguments and exit
-non-zero if any file is missing from both target and source (or a copy failed).
+Add `--verbose` to also report files that **are** present in the target (with
+their size). Both accept optional `[csv-file] [filelist]` positional arguments and
+exit non-zero if any file is missing from both target and source (or a copy failed).
 
 ## Typical workflow
 
